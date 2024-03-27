@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - Mahir Blog</title>
+    <link rel="stylesheet" href="/styles/dashboard.css" />
+  </head>
+  <body>
+    <div id="sidebar">
+      <h2><a href="/index.html">Mahir Blog</a></h2>
+      <a href="#">Beranda</a>
+      <a href="/admin/tambah-artikel.html">Tulis Artikel</a>
+      <a href="#">Pengaturan</a>
+      <a href="#" class="btn-logout" onclick="logoutFunction()">Logout</a>
+    </div>
+    <div id="content">
+      <div id="navbar">
+        <div class="toggle-btn" onclick="toggleSidebar()">&#9776;</div>
+        <div class="right">
+          <input type="text" name="search" id="search" placeholder="Cari" />
+          <button id="logout-btn" onclick="logoutFunction()">Logout</button>
+        </div>
+      </div>
+      <div class="content-dashboard">
+        <!-- konten dashboard -->
+        <h1>Selamat datang di Dashboard</h1>
+        <!-- Modal content -->
+        <div class="modal" id="editModal">
+          <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h1>Edit Artikel</h1>
+            <form id="editForm">
+              <label for="judul">Masukkan Judul</label>
+              <input type="text" id="judul" name="judul" required />
+              <label for="penulis">Penulis</label>
+              <input type="text" id="penulis" name="penulis" required />
+              <label for="tanggal">Tanggal</label>
+              <input type="date" id="tanggal" name="tanggal" />
+              <label for="tulisArtikel">Tulis Artikel</label>
+              <textarea
+                name="tulisArtikel"
+                id="tulisArtikel"
+                cols="30"
+                rows="10"
+              ></textarea>
+              <input
+                type="submit"
+                onclick="saveEditedArtikels()"
+                value="Update Artikel"
+              />
+            </form>
+          </div>
+        </div>
+        <table id="artikelTable">
+          <thead>
+            <tr>
+              <th>Judul</th>
+              <th>Artikel</th>
+              <th>Penulis</th>
+              <th>Tanggal Terbit</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
+    <script>
+      const editedIndex = -1;
+      function closeModal() {
+        modal.style.display = "none";
+      }
+      function toggleSidebar() {
+        const sidebar = document.getElementById("sidebar");
+        const content = document.getElementById("content");
+
+        if (sidebar.style.width === "250px") {
+          sidebar.style.width = "0px";
+          sidebar.style.display = "none";
+          content.style.marginLeft = "0px";
+        } else {
+          sidebar.style.width = "250px";
+          sidebar.style.display = "block";
+          content.style.marginLeft = "250px";
+        }
+      }
+
+      function logoutFunction() {
+        localStorage.removeItem("session");
+        alert("Logged out successfully");
+        window.location.href = "/auth/login.html";
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const sessionDatas = getSessionDatasFromLocalStorage();
+        if (!sessionDatas) {
+          window.location.href = "/auth/login.html";
+          alert("Sesi Anda telah berakhir, silakan login kembali");
+        }
+      });
+
+      function getSessionDatasFromLocalStorage() {
+        let sessionJSON = localStorage.getItem("session");
+        return sessionJSON ? JSON.parse(sessionJSON) : null;
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const artikelTable = document.getElementById("artikelTable");
+        const userData = getArticlesFromLocalStorage();
+
+        userData.forEach((article, index) => {
+          const row = document.createElement("tr");
+
+          row.innerHTML = `
+      <td>${article.judul}</td>
+      <td>${article.artikel}</td>
+      <td>${article.penulis}</td>
+      <td>${article.tanggal}</td>
+      <td>
+        <button onclick="buttonEdit(${index})">Edit</button>
+        <button onclick="buttonHapus(${index})">Hapus</button>
+      </td>
+    `;
+          artikelTable.appendChild(row);
+        });
+      });
+
+      function buttonEdit(index) {
+        const modal = document.getElementById("editModal");
+        modal.style.display = "block";
+
+        const artikels = getArticlesFromLocalStorage();
+        let editedIndex = index;
+        const editedArtikels = artikels[editedIndex];
+
+        document.getElementById("judul").value = editedArtikels.judul;
+        document.getElementById("penulis").value = editedArtikels.penulis;
+        document.getElementById("tanggal").value = editedArtikels.tanggal;
+        document.getElementById("tulisArtikel").value = editedArtikels.artikel;
+      }
+
+      function saveEditedArtikels() {
+        const judulInput = document.getElementById("judul");
+        const penulisInput = document.getElementById("penulis");
+        const tanggalInput = document.getElementById("tanggal");
+        const artikelInput = document.getElementById("tulisArtikel");
+
+        const editedJudul = judulInput.value.trim();
+        const editedPenulis = penulisInput.value.trim();
+        const editedTanggal = tanggalInput.value.trim();
+        const editedArtikel = artikelInput.value.trim();
+
+        if (
+          editedJudul !== "" ||
+          editedPenulis !== "" ||
+          editedTanggal !== "" ||
+          editedArtikel !== ""
+        ) {
+          const artikels = getArticlesFromLocalStorage();
+
+          artikels[editedIndex] = {
+            judul: editedJudul,
+            penulis: editedPenulis,
+            tanggal: editedTanggal,
+            artikel: editedArtikel,
+          };
+
+          saveArtikelsToLocalStorage(artikels);
+          alert("Artikel berhasil diupdate");
+          closeModal(); // Close modal after saving
+        } else {
+          alert("Inputan tidak boleh kosong");
+        }
+      }
+
+      function buttonHapus(index) {
+        const artikels = getArticlesFromLocalStorage();
+        if (confirm("Apakah anda yakin ingin menghapus data ini?")) {
+          artikels.splice(index, 1);
+          alert("Data berhasil dihapus");
+          saveArtikelsToLocalStorage(artikels); // Save updated articles after deletion
+          window.location.reload(); // Reload the page
+        } else {
+          alert("Data tidak jadi dihapus");
+        }
+      }
+
+      function closeModal() {
+        const modal = document.getElementById("editModal");
+        modal.style.display = "none";
+      }
+
+      function saveArtikelsToLocalStorage(arg) {
+        localStorage.setItem("artikels", JSON.stringify(arg));
+      }
+
+      function getArticlesFromLocalStorage() {
+        let articlesJSON = localStorage.getItem("artikels");
+        return articlesJSON ? JSON.parse(articlesJSON) : [];
+      }
+    </script>
+  </body>
+</html>

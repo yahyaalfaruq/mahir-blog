@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - Mahir Blog</title>
+    <link rel="stylesheet" href="/styles/tambah-artikel.css" />
+  </head>
+  <body>
+    <div id="sidebar">
+      <h2><a href="/index.html">Mahir Blog</a></h2>
+      <a href="/admin/dashboard.html">Beranda</a>
+      <a href="#">Tulis Artikel</a>
+      <a href="#">Pengaturan</a>
+      <a href="#" class="btn-logout" onclick="logoutFunction()">Logout</a>
+    </div>
+    <div id="content">
+      <div id="navbar">
+        <div class="toggle-btn" onclick="toggleSidebar()">&#9776;</div>
+        <div class="right">
+          <input type="text" name="search" id="search" placeholder="Cari" />
+          <button id="logout-btn" onclick="logoutFunction()">Logout</button>
+        </div>
+      </div>
+      <div class="content-dashboard">
+        <!-- konten dashboard -->
+        <h1>Tambahkan Artikel</h1>
+        <form id="artikelForm">
+          <label for="judul">Masukkan Judul</label>
+          <input type="text" id="judul" name="judul" required />
+          <label for="penulis">Penulis</label>
+          <input type="text" id="penulis" name="penulis" required />
+          <label for="tanggal">Tanggal</label>
+          <input type="date" id="tanggal" name="tanggal" />
+          <label for="tulisArtikel">Tulis Artikel</label>
+          <textarea
+            name="tulisArtikel"
+            id="tulisArtikel"
+            cols="30"
+            rows="10"
+          ></textarea>
+          <input type="submit" value="Tambah Artikel" />
+        </form>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const userSession = getSesionFromLocalStorage();
+
+        if (!userSession) {
+          window.location.href = "/auth/login.html";
+          alert("Sesi Anda telah berakhir , silakan login kembali");
+        }
+      });
+
+      function toggleSidebar() {
+        const sidebar = document.getElementById("sidebar");
+        const content = document.getElementById("content");
+
+        if (sidebar.style.width === "250px") {
+          sidebar.style.width = "0px";
+          sidebar.style.display = "none";
+          content.style.marginLeft = "0px";
+        } else {
+          sidebar.style.width = "250px";
+          sidebar.style.display = "block";
+          content.style.marginLeft = "250px";
+        }
+      }
+
+      function logoutFunction() {
+        localStorage.removeItem("session");
+        alert("Logged out successfully");
+        window.location.href = "/auth/login.html";
+      }
+
+      artikelForm.addEventListener("submit", (event) => {
+        const artikelForm = document.getElementById("artikelForm");
+        event.preventDefault();
+
+        const judulInput = document.getElementById("judul");
+        const penulisInput = document.getElementById("penulis");
+        const tanggalInput = document.getElementById("tanggal");
+        const artikelInput = document.getElementById("tulisArtikel");
+
+        const judul = judulInput.value.trim();
+        const penulis = penulisInput.value.trim();
+        const tanggal = tanggalInput.value.trim();
+        const artikel = artikelInput.value.trim();
+
+        if (
+          judul !== "" ||
+          penulis !== "" ||
+          tanggal !== "" ||
+          artikel !== ""
+        ) {
+          const artikels = getArticlesFromLocalStorage();
+          artikels.push({
+            judul: judul,
+            penulis: penulis,
+            tanggal: tanggal,
+            artikel: artikel,
+          });
+          alert("Artikel berhasil ditambahkan");
+          window.location.href = "/admin/dashboard.html";
+          console.log(artikels);
+          saveArtikelsToLocalStorage(artikels);
+        } else {
+          alert("Inputan tidak boleh kosong");
+        }
+
+        document.forms["artikelForm"].reset();
+      });
+
+      function getSesionFromLocalStorage() {
+        let sessionJSON = localStorage.getItem("session");
+        return sessionJSON ? JSON.parse(sessionJSON) : null;
+      }
+
+      function getArticlesFromLocalStorage() {
+        let articlesJSON = localStorage.getItem("artikels");
+        return articlesJSON ? JSON.parse(articlesJSON) : [];
+      }
+
+      function saveArtikelsToLocalStorage(arg) {
+        localStorage.setItem("artikels", JSON.stringify(arg));
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+1. hari ini sampai halaman register dan login sudah bisa terintegrasi / diproses dengan baik
+
+2. Senin , 4 maret 2024
+
+3. hari ini sampai halaman register, login dan dashboard sudah bisa terintegrasi dengan baik
+4. Selasa, 5 maret 2024

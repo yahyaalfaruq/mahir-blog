@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Hedvig+Letters+Sans&family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@500;600;700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+* {
+    font-family: "Roboto", sans-serif;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #407bff;
+    --secondary: #2d6fff;
+}
+
+/* mobile responsive */
+
+/* sidebar */
+#sidebar {
+    position: fixed;
+    width: 250px;
+    padding-top: 30px;
+    display: none;
+    height: 100%;
+    background-color: var(--primary);
+}
+
+#sidebar h2 {
+    color: white;
+    text-align: center;
+    padding: 20px 0px;
+}
+
+#sidebar h2 a {
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#sidebar a {
+    display: flex;
+    /* flex-direction: column; */
+    text-decoration: none;
+    padding: 10px;
+    color: white;
+}
+
+#sidebar a:hover {
+    background-color: var(--secondary);
+}
+
+/* content */
+
+#content {
+    margin-left: 0px;
+    padding: 16px;
+    height: 100%;
+    overflow: hidden;
+}
+
+#navbar {
+    background-color: var(--primary);
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    overflow: hidden;
+}
+
+#navbar .right input, button {
+    padding: 8px 13px;
+    border-radius: 4px;
+    border: none;
+    display: none;
+}
+
+#navbar .right button {
+   cursor: pointer;
+}
+
+.toggle-btn {
+    background-color: white;
+    border-radius: 4px;
+    padding: 4px 8px;
+    display: flex;
+    justify-content: center;
+    transform: scale(1.2);
+}
+
+.content-dashboard {
+    margin-top: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0px;
+    gap: 5px;
+}
+
+form input {
+    padding: 8px 13px;
+    border: none;
+    border-radius: 4px;
+    background-color: rgb(220, 220, 220);
+}
+
+form textarea {
+    background-color: rgb(220, 220, 220);
+    border: none;
+    border-radius: 4px;
+}
+
+form input[type="submit"] {
+    background-color: #2d6fff;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+}
+
+form input[type="submit"]:hover {
+    background-color: #407bff;
+}
+
+@media (min-width: 768px) {
+    #sidebar {
+        display: block;
+    }
+
+    #content {
+        margin-left: 250px;
+    }
+
+    #navbar .right input, button {
+        display: inline;
+    }
+
+    #sidebar .btn-logout {
+        display: none;
+    }
+}
