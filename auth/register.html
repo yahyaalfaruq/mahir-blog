@@ -67,11 +67,11 @@
         }
 
         function setInputsInLocalStorage(set) {
-            localStorage.setItem("inputs", JSON.stringify(set));
+            localStorage.setItem("datas", JSON.stringify(set));
         }
 
         function getInputsFromLocalStorage() {
-            let inputJSON = localStorage.getItem("inputs");
+            let inputJSON = localStorage.getItem("datas");
             return inputJSON ? JSON.parse(inputJSON) : [];
         }
 
