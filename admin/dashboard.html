@@ -66,7 +66,7 @@
       </div>
     </div>
     <script>
-      const editedIndex = -1;
+      let editedIndex = -1;
       function closeModal() {
         modal.style.display = "none";
       }
@@ -130,7 +130,7 @@
         modal.style.display = "block";
 
         const artikels = getArticlesFromLocalStorage();
-        let editedIndex = index;
+        editedIndex = index;
         const editedArtikels = artikels[editedIndex];
 
         document.getElementById("judul").value = editedArtikels.judul;
@@ -139,7 +139,7 @@
         document.getElementById("tulisArtikel").value = editedArtikels.artikel;
       }
 
-      function saveEditedArtikels() {
+      function saveEditedArtikels(index) {
         const judulInput = document.getElementById("judul");
         const penulisInput = document.getElementById("penulis");
         const tanggalInput = document.getElementById("tanggal");
@@ -167,7 +167,7 @@
 
           saveArtikelsToLocalStorage(artikels);
           alert("Artikel berhasil diupdate");
-          closeModal(); // Close modal after saving
+          // closeModal(); // Close modal after saving
         } else {
           alert("Inputan tidak boleh kosong");
         }
