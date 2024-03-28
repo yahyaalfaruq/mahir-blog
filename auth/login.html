@@ -101,7 +101,7 @@
             const cekDefaultUser = datas.some((data) => data.email === defaultDatas.email);
 
             if(!cekDefaultUser) {
-                students.push(defaultDatas);
+                datas.push(defaultDatas);
             }
 
             saveDatasToLocalStorage(datas);
