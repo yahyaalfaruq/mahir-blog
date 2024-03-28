@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard - Mahir Blog</title>
-    <link rel="stylesheet" href="../styles/tambah-artikel.css" />
+    <link rel="stylesheet" href="./styles/tambah-artikel.css" />
   </head>
   <body>
     <div id="sidebar">
@@ -48,7 +48,7 @@
         const userSession = getSesionFromLocalStorage();
 
         if (!userSession) {
-          window.location.href = "../auth/login.html";
+          window.location.href = "./auth/login.html";
           alert("Sesi Anda telah berakhir , silakan login kembali");
         }
       });
@@ -71,7 +71,7 @@
       function logoutFunction() {
         localStorage.removeItem("session");
         alert("Logged out successfully");
-        window.location.href = "../auth/login.html";
+        window.location.href = "./auth/login.html";
       }
 
       artikelForm.addEventListener("submit", (event) => {
@@ -102,7 +102,7 @@
             artikel: artikel,
           });
           alert("Artikel berhasil ditambahkan");
-          window.location.href = "../admin/dashboard.html";
+          window.location.href = "./admin/dashboard.html";
           console.log(artikels);
           saveArtikelsToLocalStorage(artikels);
         } else {
