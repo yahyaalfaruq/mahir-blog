@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login Page - Mahir Blog</title>
-    <link rel="stylesheet" href="/styles/login.css" />
+    <link rel="stylesheet" href="../styles/login.css" />
 
     <!-- AOS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
@@ -13,7 +13,7 @@
   <body>
     <div class="container">
       <div class="wrap-form" data-aos="zoom-in-right" data-aos-duration="1500">
-        <a href="/index.html" class="logo">
+        <a href="./index.html" class="logo">
           <h1>Mahir Blog</h1>
         </a>
         <div>
@@ -38,12 +38,12 @@
             <input type="submit" value="Login" />
           </form>
           <span class="register">
-            Belum punya akun? <a href="/auth/register.html">Register</a>
+            Belum punya akun? <a href="../auth/register.html">Register</a>
           </span>
         </div>
       </div>
       <div class="wrap-image" data-aos="zoom-in-left" data-aos-duration="1500">
-        <img src="/assets/login.svg.svg" alt="login-image" />
+        <img src="../assets/login.svg.svg" alt="login-image" />
       </div>
     </div>
     <script>
@@ -69,7 +69,7 @@
             const authDatas = datas.find((data) => data.email === email && data.password === password);
 
             if (authDatas) {
-                window.location.href = "/admin/dashboard.html";
+                window.location.href = "../admin/dashboard.html";
                 createSession(authDatas);
                 alert("Login Berhasil!");
             } else {
@@ -94,7 +94,7 @@
             // cek apakah status student sudah login atau belum
             const sessionDatas = getSessionDatasFromLocalStorage();
             if (sessionDatas) {
-                window.location.href = "/admin/dashboard.html";
+                window.location.href = "../admin/dashboard.html";
             }
 
             // cek apakah default user sudah ada di local storage atau belum

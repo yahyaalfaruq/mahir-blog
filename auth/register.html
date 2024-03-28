@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register Account</title>
-    <link rel="stylesheet" href="/styles/register.css">
+    <link rel="stylesheet" href="../styles/register.css">
 
     <!--  -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -13,7 +13,7 @@
 <body>
     <div class="container">
         <div class="wrap-form" data-aos="zoom-in-right" data-aos-duration="1500">
-            <a href="/index.html" class="logo">
+            <a href="./index.html" class="logo">
                 <h1>Mahir Blog</h1>
             </a>
                 <div>
@@ -26,12 +26,12 @@
                         <input type="submit" onclick="registerAccount(event)" value="Register">
                     </form>
                     <span>
-                        sudah punya akun? <a href="/auth/login.html">Masuk</a>
+                        sudah punya akun? <a href="../auth/login.html">Masuk</a>
                     </span>
                 </div>
         </div>
         <div class="wrap-image" data-aos="zoom-in-left" data-aos-duration="1500">
-            <img src="/assets/register.svg.svg" alt="register-image">
+            <img src="../assets/register.svg.svg" alt="register-image">
         </div>
     </div>
     <script>
@@ -59,7 +59,7 @@
                     inputs.push({email: email, password: password});
                     alert("Input berhasil ditambahkan!");
                     document.forms["registerForm"].reset();
-                    window.location.href = "/auth/login.html";
+                    window.location.href = "../auth/login.html";
                 }
 
               setInputsInLocalStorage(inputs)
@@ -80,7 +80,7 @@
 
             if(sessionInputs) {
                 alert("Anda harus logout terlebih dahulu");
-                window.location.href = "/admin/dashboard.html";
+                window.location.href = "../admin/dashboard.html";
             }
         });
 
